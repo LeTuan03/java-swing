@@ -12,6 +12,7 @@ public class StudentInClass {
     private String nation;
     private String address;
     private String religion;
+    private String code;
     private Date birth;
     private Long status;
     private Date createdAt;
@@ -24,22 +25,6 @@ public class StudentInClass {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Classes getClasses() {
-        return classes;
-    }
-
-    public void setClasses(Classes classes) {
-        this.classes = classes;
-    }
-
-    public StudentInClass getStudensInClass() {
-        return studensInClass;
-    }
-
-    public void setStudensInClass(StudentInClass studensInClass) {
-        this.studensInClass = studensInClass;
     }
 
     public String getUsername() {
@@ -106,6 +91,14 @@ public class StudentInClass {
         this.religion = religion;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public Date getBirth() {
         return birth;
     }
@@ -129,5 +122,22 @@ public class StudentInClass {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    
+
+    public Classes getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
+
+    public StudentInClass getStudensInClass() {
+        return studensInClass;
+    }
+
+    public void setStudensInClass(StudentInClass studensInClass) {
+        this.studensInClass = studensInClass;
+    }
+
+       
 }

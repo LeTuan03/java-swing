@@ -196,7 +196,7 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
                 String id = tblModel.getValueAt(selectedRow, 1).toString();
                 try {
-                    String url = "SELECT * FROM qlhs.tbl_member WHERE (id = ?)";
+                    String url = "SELECT * FROM qlhs.tbl_classes WHERE (id = ?)";
                     pst = connection.prepareStatement(url);
                     pst.setString(1, id);
                     rs = pst.executeQuery();

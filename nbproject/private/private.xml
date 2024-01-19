@@ -6,12 +6,18 @@
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DialogLopHoc.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/utility/TableUpdateListener.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/model/StudentInClass.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/main/EEE.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarManageTeacher.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/ThongTinGiaoVien.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/ThongTinHocSinh.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/model/Classes.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DialogHocSinh.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/dao/ClassesDAO.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/model/Account.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarAccountInfo.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/dao/StudentDAO.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/Home.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/service/ClassesService.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/common/ConnectDatabase.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/LoginApp.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/Login.java</file>

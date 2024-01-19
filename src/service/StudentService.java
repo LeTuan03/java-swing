@@ -5,13 +5,18 @@ import java.util.List;
 import model.StudentInClass;
 
 public class StudentService {
-    private  StudentDAO studentDAO;
-    
-    public StudentService(){
+
+    private StudentDAO studentDAO;
+
+    public StudentService() {
         studentDAO = new StudentDAO();
     }
-    
-    public List<StudentInClass> getListSTU(){
+
+    public List<StudentInClass> getListSTU() {
         return studentDAO.getListSTU();
+    }
+
+    public List<StudentInClass> getListStuInClass(String id) {
+        return studentDAO.getListStuInClass(id);
     }
 }

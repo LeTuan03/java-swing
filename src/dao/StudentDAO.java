@@ -43,4 +43,33 @@ public class StudentDAO {
 //        trả về danh sách sản phẩm
         return SPlist;
     }
+    
+    public List<StudentInClass> getListStuInClass(String id){
+        List<StudentInClass> SPlist = new ArrayList<StudentInClass>();
+        
+        Connection connection = ConnectDatabase.getMyConnection();
+        String sql = "SELECT id, user_id, user_name, code FROM tbl_member WHERE project_id = ?";
+        System.out.println(id);
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+           ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                StudentInClass sp = new StudentInClass();
+                
+                sp.setId(rs.getInt("id"));
+                sp.setUsername(rs.getString("user_name"));
+                sp.setCode(rs.getString("code"));
+                SPlist.add(sp);
+            }
+            
+//            ngắt kết nối database
+            ps.close();
+            connection.close();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        trả về danh sách sản phẩm
+        return SPlist;
+    }
 }
