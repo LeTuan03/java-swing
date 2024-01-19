@@ -4,19 +4,44 @@
  */
 package view;
 
+import common.ConnectDatabase;
+import java.awt.Window;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author leetu
  */
 public class DialogLopHoc extends javax.swing.JPanel {
 
-    /**
-     * Creates new form DialogHocSinh
-     */
+    private JFrame parentFrame;
+    Connection connection = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    String id = null;
     public DialogLopHoc() {
         initComponents();
     }
 
+    public DialogLopHoc(ResultSet rs, JFrame parentFrame) {
+
+        initComponents();
+        this.parentFrame = parentFrame;
+        connection = ConnectDatabase.getMyConnection();
+        try {
+            System.out.println("dfdf");
+            id = rs.getString("id");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,8 +61,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
         jTextField6 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSubmit = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -65,9 +90,19 @@ public class DialogLopHoc extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
         jLabel1.setText("Thêm mới/Cập nhật lớp học");
 
-        jButton1.setText("Lưu");
+        btnSubmit.setText("Lưu");
+        btnSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSubmitMouseClicked(evt);
+            }
+        });
 
-        jButton2.setText("Hủy");
+        btnCancel.setText("Hủy");
+        btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelMouseClicked(evt);
+            }
+        });
 
         jButton3.setText("Thêm học sinh");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -123,9 +158,9 @@ public class DialogLopHoc extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addComponent(btnSubmit)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2))
+                                .addComponent(btnCancel))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -185,8 +220,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSubmit)
+                    .addComponent(btnCancel))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -200,10 +235,22 @@ public class DialogLopHoc extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btnCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseClicked
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
+    }//GEN-LAST:event_btnCancelMouseClicked
+
+    private void btnSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubmitMouseClicked
+        
+        
+    }//GEN-LAST:event_btnSubmitMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;

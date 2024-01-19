@@ -8,7 +8,7 @@ public class Classes {
     private Date startDate;
     private Date endDate;
     private String status;
-    private String homeTeacher;
+    private String createdBy;
 
     public int getId() {
         return id;
@@ -50,21 +50,11 @@ public class Classes {
         this.status = status;
     }
 
-    public String getHomeTeacher() {
-        return homeTeacher;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setHomeTeacher(String homeTeacher) {
-        this.homeTeacher = homeTeacher;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
-
-    public int getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
-    }
-    private int teacherId;
-
 }
