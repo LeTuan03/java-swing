@@ -215,10 +215,19 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 if (password.getText() != null && !password.getText().isEmpty()) {
                     sqlBuilder.append("password = ?, ");
                 }
-
                 if (username.getText() != null && !username.getText().isEmpty()) {
                     sqlBuilder.append("username = ?, ");
                 }
+                if (phone.getText() != null && !phone.getText().isEmpty()) {
+                    sqlBuilder.append("phone = ?, ");
+                }
+                if (email.getText() != null && !email.getText().isEmpty()) {
+                    sqlBuilder.append("email = ?, ");
+                }
+                if (status.getText() != null && !status.getText().isEmpty()) {
+                    sqlBuilder.append("status = ?, ");
+                }
+
 
                 sqlBuilder.append("role = 3 WHERE (id = ?);");
             }
@@ -271,6 +280,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Thao tác không thành công!");
             }
         } catch (Exception e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
         }
     }//GEN-LAST:event_btnSubmitMouseClicked
