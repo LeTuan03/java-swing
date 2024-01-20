@@ -11,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import model.Account;
 import model.StudentInClass;
 import service.StudentService;
 

@@ -1,17 +1,28 @@
 package view;
 
 import common.ConnectDatabase;
+import java.awt.Component;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import javax.swing.AbstractCellEditor;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import model.StudentInClass;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import model.Classes;
+import model.Member;
+import service.ClassesService;
 import service.StudentService;
 
 public class DialogLopHoc extends javax.swing.JPanel {
@@ -22,11 +33,11 @@ public class DialogLopHoc extends javax.swing.JPanel {
     PreparedStatement pst = null;
     ResultSet rs = null;
     String id = null;
+    Classes classes;
+    private JComboBox<String> comboBox;
 
     public DialogLopHoc() {
         initComponents();
-        this.parentFrame = parentFrame;
-        connection = ConnectDatabase.getMyConnection();
     }
 
     public DialogLopHoc(ResultSet rs, JFrame parentFrame) {
@@ -38,6 +49,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
             className.setText(rs.getString("name"));
             startDate.setText(rs.getString("start_date"));
             endDate.setText(rs.getString("end_date"));
+            homeTeacher.setText(rs.getString("account_id"));
             note.setText(rs.getString("note"));
             id = rs.getString("id");
         } catch (Exception e) {
@@ -45,7 +57,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
         }
         TableStu();
-
     }
 
     public void TableStu() {
@@ -57,23 +68,95 @@ public class DialogLopHoc extends javax.swing.JPanel {
         ModelSP.addColumn("STT");
         ModelSP.addColumn("ID");
         ModelSP.addColumn("Tên học sinh");
-        ModelSP.addColumn("Mã học sinh");
+        ModelSP.addColumn("Mã Lớp học");
+        ModelSP.addColumn("Thao tác");
+
+        TableStu.getColumn("Thao tác").setCellRenderer(new ButtonRenderer());
+        TableStu.getColumn("Thao tác").setCellEditor(new ButtonEditor());
 
         TableStu.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
         setDataTableStuInClasses(studentService.getListStuInClass(id));
     }
 
-    private void setDataTableStuInClasses(List<StudentInClass> SPlist) {
-        for (StudentInClass stu : SPlist) {
+    private void setDataTableStuInClasses(List<Member> SPlist) {
+        for (Member stu : SPlist) {
             ModelSP.addRow(new Object[]{
                 ModelSP.getRowCount() + 1,
-                stu.getId(),
+                stu.getUser_id(),
                 stu.getUsername(),
-                stu.getCode()
+                stu.getCode(),
+                "DELETE"
             });
         }
     }
+
+    private class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value.toString());
+            return this;
+        }
+    }
+
+    private class ButtonEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+
+        private JButton button;
+        private int selectedRow;
+
+        public ButtonEditor() {
+            button = new JButton();
+            button.addActionListener(this);
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return button.getText();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            button.setText(value.toString());
+            selectedRow = row;
+            return button;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa học sinh này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                int row = selectedRow;
+                // Xóa dòng tương ứng trong bảng
+                ModelSP.removeRow(row);
+                // Xóa dữ liệu từ cơ sở dữ liệu
+                deleteDataFromDatabase(row);
+            }
+            fireEditingStopped();
+        }
+
+        private void deleteDataFromDatabase(int row) {
+            String studentId = TableStu.getValueAt(row, 1).toString();
+            String code = TableStu.getValueAt(row, 3).toString();
+            Connection connection = ConnectDatabase.getMyConnection();
+            String sql = "DELETE FROM `tbl_member` WHERE user_id = ? AND code = ?";
+            try {
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, studentId);
+                ps.setString(2, code);
+                ps.executeUpdate();
+
+                ps.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -93,7 +176,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
         addStu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableStu = new javax.swing.JTable();
-        homeTeacher = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        homeTeacher = new javax.swing.JTextField();
 
         className.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
@@ -144,17 +228,17 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         TableStu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "Thao tác", "Tên học sinh", "Mã học sinh"
+                "STT", "Thao tác", "Tên học sinh", "Mã học sinh", "Thao tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                true, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -167,9 +251,10 @@ public class DialogLopHoc extends javax.swing.JPanel {
             TableStu.getColumnModel().getColumn(1).setResizable(false);
             TableStu.getColumnModel().getColumn(2).setResizable(false);
             TableStu.getColumnModel().getColumn(3).setResizable(false);
+            TableStu.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        homeTeacher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -182,7 +267,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addStu)
                             .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 954, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -202,12 +287,17 @@ public class DialogLopHoc extends javax.swing.JPanel {
                                     .addComponent(jLabel7)
                                     .addComponent(note, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                                     .addComponent(jLabel4)
-                                    .addComponent(homeTeacher, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                    .addComponent(homeTeacher))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))))
                         .addGap(61, 61, 61))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,6 +337,11 @@ public class DialogLopHoc extends javax.swing.JPanel {
                     .addComponent(btnSubmit)
                     .addComponent(btnCancel))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -262,65 +357,29 @@ public class DialogLopHoc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelMouseClicked
 
     private void btnSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubmitMouseClicked
-
+        classes = new Classes();
+        ClassesService classesService = new ClassesService();
+        classes.setName(className.getText());
+        classes.setNote(note.getText());
+        classes.setAccountId(homeTeacher.getText());
+        System.out.println(id);
         try {
-            StringBuilder sqlBuilder = new StringBuilder();
 
             if (id == null || id.isEmpty()) {
                 // Thêm mới
-                sqlBuilder.append("INSERT INTO tbl_classes (name, note) VALUES (?, ?)");
+
+                classesService.AddNewClassesService(classes);
             } else {
                 // Cập nhật
-                sqlBuilder.append("UPDATE qlhs.tbl_classes SET ");
-
-                if (className.getText() != null && !className.getText().isEmpty()) {
-                    sqlBuilder.append("name = ? , ");
-                }
-                if (note.getText() != null && !note.getText().isEmpty()) {
-                    sqlBuilder.append("note = ? ");
-                }
-                sqlBuilder.append("WHERE (id = ?)");
+                classes.setId(Integer.valueOf(id));
+                classesService.UpdateClassesService(classes);
+                System.out.println(id);
             }
 
-            pst = connection.prepareStatement(sqlBuilder.toString());
-
-            int parameterIndex = 1;
-
-            if (id == null || id.isEmpty()) {
-                // Thêm mới
-                pst.setString(parameterIndex++, className.getText());
-                pst.setString(parameterIndex++, note.getText());
-            } else {
-                // Cập nhật
-                if (className.getText() != null && !className.getText().isEmpty()) {
-                    pst.setString(parameterIndex++, className.getText());
-                }
-                if (note.getText() != null && !note.getText().isEmpty()) {
-                    pst.setString(parameterIndex++, note.getText());
-                }
-                pst.setString(parameterIndex++, id);
-            }
-
-            int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0) {
-                if (id == null || id.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Thêm mới lớp học thành công!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Cập nhật lớp học thành công!");
-                }
-                Window window = SwingUtilities.getWindowAncestor(this);
-                if (window != null) {
-                    window.dispose();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Thao tác không thành công!");
-            }
         } catch (Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
         }
-
 
     }//GEN-LAST:event_btnSubmitMouseClicked
 
@@ -342,7 +401,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JTextField className;
     private javax.swing.JTextField endDate;
-    private javax.swing.JComboBox<String> homeTeacher;
+    private javax.swing.JTextField homeTeacher;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

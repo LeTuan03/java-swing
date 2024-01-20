@@ -25,7 +25,6 @@ public class Dashboad extends javax.swing.JFrame {
     private void getCurrenrUser() {
          System.out.println(currentAccount.getUsername());
     }
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

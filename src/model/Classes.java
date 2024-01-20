@@ -9,6 +9,7 @@ public class Classes {
     private Date endDate;
     private String status;
     private String createdBy;
+    private String accountId;
     private String note;
 
     public int getId() {
@@ -59,6 +60,14 @@ public class Classes {
         this.createdBy = createdBy;
     }
 
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
     public String getNote() {
         return note;
     }
@@ -66,4 +75,6 @@ public class Classes {
     public void setNote(String note) {
         this.note = note;
     }
+
+   
 }
