@@ -41,4 +41,25 @@ public class ClassesDAO {
 //        trả về danh sách sản phẩm
         return SPlist;
     }
+    public void updateClasses(Classes classes){
+        
+        Connection connection = ConnectDatabase.getMyConnection();
+        String sql = "UPDATE `qlhs`.`tbl_classes` SET `name` = ?, `note` = ? WHERE (`id` = ? )";
+        
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, classes.getName());
+            ps.setString(2, classes.getNote());
+            ps.setInt(3, classes.getId());
+            
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                
+            }
+            ps.close();
+            connection.close();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

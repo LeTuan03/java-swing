@@ -71,6 +71,11 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(940, 61));
 
         btnAddNew.setText("Thêm mới");
+        btnAddNew.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -220,6 +225,15 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tbl_ClassesMouseClicked
+
+    private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
+        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new DialogLopHoc());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_btnAddNewMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

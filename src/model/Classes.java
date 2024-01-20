@@ -9,6 +9,7 @@ public class Classes {
     private Date endDate;
     private String status;
     private String createdBy;
+    private String note;
 
     public int getId() {
         return id;
@@ -56,5 +57,13 @@ public class Classes {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

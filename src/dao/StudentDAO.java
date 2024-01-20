@@ -49,7 +49,7 @@ public class StudentDAO {
         
         Connection connection = ConnectDatabase.getMyConnection();
         String sql = "SELECT id, user_id, user_name, code FROM tbl_member WHERE project_id = ?";
-        System.out.println(id);
+        
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
            ps.setString(1, id);

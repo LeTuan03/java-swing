@@ -15,6 +15,7 @@ import model.StudentInClass;
 import service.StudentService;
 
 public class DialogLopHoc extends javax.swing.JPanel {
+
     private DefaultTableModel ModelSP;
     private JFrame parentFrame;
     Connection connection = null;
@@ -24,6 +25,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
     public DialogLopHoc() {
         initComponents();
+        this.parentFrame = parentFrame;
+        connection = ConnectDatabase.getMyConnection();
     }
 
     public DialogLopHoc(ResultSet rs, JFrame parentFrame) {
@@ -35,7 +38,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
             className.setText(rs.getString("name"));
             startDate.setText(rs.getString("start_date"));
             endDate.setText(rs.getString("end_date"));
-            startDate.setText(rs.getString("note"));
+            note.setText(rs.getString("note"));
             id = rs.getString("id");
         } catch (Exception e) {
             System.out.println(e);
@@ -60,7 +63,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         setDataTableStuInClasses(studentService.getListStuInClass(id));
     }
-    
+
     private void setDataTableStuInClasses(List<StudentInClass> SPlist) {
         for (StudentInClass stu : SPlist) {
             ModelSP.addRow(new Object[]{
@@ -82,7 +85,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         endDate = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        note = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JButton();
@@ -90,8 +93,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         addStu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableStu = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        homeTeacher = new javax.swing.JComboBox<>();
 
         className.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
@@ -107,7 +109,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         jLabel6.setText("Ngày kết thúc");
 
-        jTextField6.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        note.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
         jLabel7.setText("Ghi chú");
 
@@ -167,9 +169,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
             TableStu.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        homeTeacher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -200,19 +200,14 @@ public class DialogLopHoc extends javax.swing.JPanel {
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                                    .addComponent(note, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(homeTeacher, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))))
                         .addGap(61, 61, 61))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +223,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(homeTeacher, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,7 +237,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(note, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(addStu)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -252,11 +247,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
                     .addComponent(btnSubmit)
                     .addComponent(btnCancel))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -272,7 +262,65 @@ public class DialogLopHoc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelMouseClicked
 
     private void btnSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSubmitMouseClicked
-        
+
+        try {
+            StringBuilder sqlBuilder = new StringBuilder();
+
+            if (id == null || id.isEmpty()) {
+                // Thêm mới
+                sqlBuilder.append("INSERT INTO tbl_classes (name, note) VALUES (?, ?)");
+            } else {
+                // Cập nhật
+                sqlBuilder.append("UPDATE qlhs.tbl_classes SET ");
+
+                if (className.getText() != null && !className.getText().isEmpty()) {
+                    sqlBuilder.append("name = ? , ");
+                }
+                if (note.getText() != null && !note.getText().isEmpty()) {
+                    sqlBuilder.append("note = ? ");
+                }
+                sqlBuilder.append("WHERE (id = ?)");
+            }
+
+            pst = connection.prepareStatement(sqlBuilder.toString());
+
+            int parameterIndex = 1;
+
+            if (id == null || id.isEmpty()) {
+                // Thêm mới
+                pst.setString(parameterIndex++, className.getText());
+                pst.setString(parameterIndex++, note.getText());
+            } else {
+                // Cập nhật
+                if (className.getText() != null && !className.getText().isEmpty()) {
+                    pst.setString(parameterIndex++, className.getText());
+                }
+                if (note.getText() != null && !note.getText().isEmpty()) {
+                    pst.setString(parameterIndex++, note.getText());
+                }
+                pst.setString(parameterIndex++, id);
+            }
+
+            int rowsAffected = pst.executeUpdate();
+
+            if (rowsAffected > 0) {
+                if (id == null || id.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Thêm mới lớp học thành công!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cập nhật lớp học thành công!");
+                }
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Thao tác không thành công!");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+        }
+
 
     }//GEN-LAST:event_btnSubmitMouseClicked
 
@@ -283,7 +331,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         frame.getContentPane().add(addStuInClass);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);         
+        frame.setVisible(true);
     }//GEN-LAST:event_addStuMouseClicked
 
 
@@ -294,8 +342,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JTextField className;
     private javax.swing.JTextField endDate;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> homeTeacher;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -303,7 +350,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField note;
     private javax.swing.JTextField startDate;
     // End of variables declaration//GEN-END:variables
 }
