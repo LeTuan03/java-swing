@@ -85,7 +85,7 @@ public class ListClassInRoleSTU extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel1.setText("DANH SÁCH LỚP HỌC CỦA BẠN");
+        jLabel1.setText("DANH SÁCH LỚP HỌC ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

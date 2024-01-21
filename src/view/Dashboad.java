@@ -61,7 +61,7 @@ public class Dashboad extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setText("Tiêu đề");
+        title.setText("Trang chủ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -88,6 +88,7 @@ public class Dashboad extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         jLabel1.setText("Trang chủ");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,6 +125,7 @@ public class Dashboad extends javax.swing.JFrame {
             }
         });
 
+        manageStudent.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageStudent.setText("Quản lý học sinh");
         manageStudent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -148,6 +150,7 @@ public class Dashboad extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        manageTeacher.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageTeacher.setText("Quản lý giáo viên");
         manageTeacher.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -184,6 +187,7 @@ public class Dashboad extends javax.swing.JFrame {
             }
         });
 
+        manageClasses.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageClasses.setText("Quản lý lớp học");
         manageClasses.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -217,6 +221,7 @@ public class Dashboad extends javax.swing.JFrame {
             }
         });
 
+        infoAccount.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         infoAccount.setText("Thông tin cá nhân");
 
         javax.swing.GroupLayout home4Layout = new javax.swing.GroupLayout(home4);
@@ -242,7 +247,7 @@ public class Dashboad extends javax.swing.JFrame {
         jDesktopPanel.setLayout(jDesktopPanelLayout);
         jDesktopPanelLayout.setHorizontalGroup(
             jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 952, Short.MAX_VALUE)
+            .addGap(0, 958, Short.MAX_VALUE)
         );
         jDesktopPanelLayout.setVerticalGroup(
             jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,8 +267,7 @@ public class Dashboad extends javax.swing.JFrame {
                     .addComponent(home3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(home4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDesktopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jDesktopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

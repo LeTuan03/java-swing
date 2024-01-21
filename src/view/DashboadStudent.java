@@ -1,25 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
-/**
- *
- * @author leetu
- */
+
 public class DashboadStudent extends javax.swing.JFrame {
 
     public int idAcc;
+
     public DashboadStudent() {
         initComponents();
     }
-    
+
     public DashboadStudent(int data) {
         initComponents();
         idAcc = data;
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -50,7 +44,7 @@ public class DashboadStudent extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setText("Tiêu đề");
+        title.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -78,6 +72,7 @@ public class DashboadStudent extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(0, 51, 51));
 
+        individualInfo.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         individualInfo.setText("   Thông tin cá nhân");
         individualInfo.setBorder(null);
         individualInfo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -87,6 +82,7 @@ public class DashboadStudent extends javax.swing.JFrame {
             }
         });
 
+        listClassStudent.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         listClassStudent.setText("   Danh sách lớp học");
         listClassStudent.setBorder(null);
         listClassStudent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -96,6 +92,7 @@ public class DashboadStudent extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton3.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         jToggleButton3.setText("   Thông tin học tập");
         jToggleButton3.setBorder(null);
         jToggleButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -161,16 +158,15 @@ public class DashboadStudent extends javax.swing.JFrame {
     private void individualInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_individualInfoActionPerformed
         container.removeAll();
         container.add(new inforSTU(idAcc)).setVisible(true);
+        title.setText("Thông tin cá nhân");
     }//GEN-LAST:event_individualInfoActionPerformed
 
     private void listClassStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listClassStudentActionPerformed
         container.removeAll();
         container.add(new ListClassInRoleSTU(idAcc)).setVisible(true);
+        title.setText("Danh sách lớp học");
     }//GEN-LAST:event_listClassStudentActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

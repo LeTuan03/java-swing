@@ -114,12 +114,12 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGap(0, 37, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(13, Short.MAX_VALUE)
+                    .addContainerGap(7, Short.MAX_VALUE)
                     .addComponent(btnAddNew)
-                    .addContainerGap(13, Short.MAX_VALUE)))
+                    .addContainerGap(7, Short.MAX_VALUE)))
         );
 
         tbl_Classes.setModel(new javax.swing.table.DefaultTableModel(
@@ -177,7 +177,10 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -190,7 +193,7 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -209,8 +212,16 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbl_ClassesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ClassesMouseEntered
+    private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
+        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(new DialogLopHoc());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_btnAddNewMouseClicked
 
+    private void tbl_ClassesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ClassesMouseEntered
 
     }//GEN-LAST:event_tbl_ClassesMouseEntered
 
@@ -223,13 +234,13 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             int selectedColumn = tbl_Classes.getSelectedColumn();
 
             String id = tblModel.getValueAt(selectedRow, 1).toString();
-            
+
             if (selectedColumn == tblModel.getColumnCount() - 1) {
                 int confirmDialogResult = JOptionPane.showConfirmDialog(
-                        null,
-                        "Xác nhận xóa lớp học?",
-                        "Xóa",
-                        JOptionPane.YES_NO_OPTION);
+                    null,
+                    "Xác nhận xóa lớp học?",
+                    "Xóa",
+                    JOptionPane.YES_NO_OPTION);
 
                 if (confirmDialogResult == JOptionPane.YES_OPTION) {
                     deleteClasses(id);
@@ -265,15 +276,6 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tbl_ClassesMouseClicked
-
-    private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
-        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new DialogLopHoc(idAcc));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }//GEN-LAST:event_btnAddNewMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

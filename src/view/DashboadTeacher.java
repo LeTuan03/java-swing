@@ -62,7 +62,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
 
         title.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         title.setForeground(new java.awt.Color(255, 255, 255));
-        title.setText("Tiêu đề");
+        title.setText("Trang chủ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -89,6 +89,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 51));
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         jLabel1.setText("Trang chủ");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -125,6 +126,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
             }
         });
 
+        manageStudent.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageStudent.setText("Quản lý học sinh");
         manageStudent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -149,6 +151,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        manageTeacher.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageTeacher.setText("Quản lý giáo viên");
         manageTeacher.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -185,6 +188,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
             }
         });
 
+        manageClasses.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         manageClasses.setText("Quản lý lớp học");
         manageClasses.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -218,6 +222,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
             }
         });
 
+        infoAccount.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
         infoAccount.setText("Thông tin cá nhân");
 
         javax.swing.GroupLayout home4Layout = new javax.swing.GroupLayout(home4);

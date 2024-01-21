@@ -46,7 +46,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
         this.parentFrame = parentFrame;
         connection = ConnectDatabase.getMyConnection();
         try {
-            System.out.println();
             className.setText(rs.getString("name"));
             startDate.setText(rs.getString("start_date"));
             endDate.setText(rs.getString("end_date"));
@@ -65,7 +64,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
         this.parentFrame = parentFrame;
         connection = ConnectDatabase.getMyConnection();
         try {
-            System.out.println();
             className.setText(rs.getString("name"));
             startDate.setText(rs.getString("start_date"));
             endDate.setText(rs.getString("end_date"));
@@ -168,6 +166,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 ModelSP.removeRow(row);
                 // Xóa dữ liệu từ cơ sở dữ liệu
                 deleteDataFromDatabase(row);
+                
+                TableStu();
             }
             fireEditingStopped();
         }
@@ -396,18 +396,18 @@ public class DialogLopHoc extends javax.swing.JPanel {
         classes.setName(className.getText());
         classes.setNote(note.getText());
         classes.setAccountId(homeTeacher.getText());
-        System.out.println(id);
+        
         try {
 
             if (id == null || id.isEmpty()) {
                 // Thêm mới
-
                 classesService.AddNewClassesService(classes);
+                JOptionPane.showMessageDialog(null, "Thêm mới lớp học thành công!");
             } else {
                 // Cập nhật
                 classes.setId(Integer.valueOf(id));
                 classesService.UpdateClassesService(classes);
-                System.out.println(id);
+                JOptionPane.showMessageDialog(null, "Cập nhật thông tin lớp học thành công!");
             }
 
         } catch (Exception e) {
