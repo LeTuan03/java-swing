@@ -42,7 +42,7 @@ public class ClassesDAO {
 //        trả về danh sách sản phẩm
         return SPlist;
     }
-    
+
     public List<Classes> getListClassesByTeacher(int id) {
         List<Classes> SPlist = new ArrayList<Classes>();
 
@@ -161,6 +161,51 @@ public class ClassesDAO {
             e.printStackTrace();
         }
 //        trả về danh sách sản phẩm
+        return SPlist;
+    }
+
+    public List<Classes> deleteClasses(String id) {
+        List<Classes> SPlist = new ArrayList<>();
+
+        Connection connection = ConnectDatabase.getMyConnection();
+        String deleteSql = "DELETE FROM `qlhs`.`tbl_classes` WHERE (`id` = ?);";
+        String selectSql = "SELECT * FROM `qlhs`.`tbl_classes`;";
+
+        try {
+            PreparedStatement deletePs = connection.prepareStatement(deleteSql);
+            deletePs.setString(1, id);
+            int rowsAffected = deletePs.executeUpdate();
+
+            if (rowsAffected > 0) {
+                PreparedStatement selectPs = connection.prepareStatement(selectSql);
+                ResultSet rs = selectPs.executeQuery();
+
+                while (rs.next()) {
+                    Classes sp = new Classes();
+
+                    sp.setId(rs.getInt("id"));
+                    SPlist.add(sp);
+                }
+
+                // Close result set and statements
+                rs.close();
+                selectPs.close();
+            } else {
+
+            }
+
+            deletePs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close connection
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         return SPlist;
     }
 }

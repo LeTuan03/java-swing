@@ -1,5 +1,6 @@
 package view;
 
+import common.ButtonRenderer;
 import common.ConnectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import service.ClassesService;
 import service.StudentService;
 
 public class SideBarManageTeacher extends javax.swing.JInternalFrame {
+
     private DefaultTableModel ModelSP;
     StudentService studentService;
     Connection connection = null;
@@ -24,11 +26,12 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
     public SideBarManageTeacher() {
         initComponents();
         tbl_account();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
-        BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         connection = ConnectDatabase.getMyConnection();
     }
+
     public SideBarManageTeacher(int idAcc) {
         initComponents();
     }
@@ -36,6 +39,8 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
     private void tbl_account() {
         studentService = new StudentService();
         ModelSP = new DefaultTableModel();
+
+        ButtonRenderer deleteButton = new ButtonRenderer("Xóa");
         tbl_Teacher.setModel(ModelSP);
         ModelSP.addColumn("STT");
         ModelSP.addColumn("ID");
@@ -43,7 +48,7 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
         ModelSP.addColumn("Số điện thoại");
 
         tbl_Teacher.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-
+        tbl_Teacher.getColumnModel().getColumn(3).setCellRenderer(deleteButton);
         setDataSPtable(studentService.getListTeacher());
     }
 
@@ -53,11 +58,16 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
                 ModelSP.getRowCount() + 1,
                 sp.getId(),
                 sp.getUsername(),
-                sp.getPhone()
+                sp.getPhone(),
+                "Xóa"
             });
         }
     }
-    
+
+    private void deleteTeacher(String teacherID) {
+        studentService.deleteAcc(teacherID);
+        tbl_account();
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -206,10 +216,21 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Please select a row.");
         } else {
             int selectedRow = tbl_Teacher.getSelectedRow();
+            int selectedColumn = tbl_Teacher.getSelectedColumn();
+            String id = tblModel.getValueAt(selectedRow, 1).toString();
+            
+            if (selectedColumn == tblModel.getColumnCount() - 1) {
+                int confirmDialogResult = JOptionPane.showConfirmDialog(
+                        null,
+                        "Xác nhận xóa giáo viên?",
+                        "Xóa",
+                        JOptionPane.YES_NO_OPTION);
 
-            if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
-                String id = tblModel.getValueAt(selectedRow, 1).toString();
-                System.out.println(id);
+                if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                    deleteTeacher(id);
+                }
+
+            } else if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
                 try {
                     String url = "SELECT * FROM qlhs.tbl_account WHERE (id = ?)";
                     pst = connection.prepareStatement(url);

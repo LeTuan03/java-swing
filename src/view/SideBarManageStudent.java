@@ -1,10 +1,16 @@
 package view;
 
+import common.ActionButtonTable;
+import common.ButtonRenderer;
 import common.ConnectDatabase;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,21 +37,23 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
         connection = ConnectDatabase.getMyConnection();
 
     }
-    
+
     public interface UpdateTableStudent {
+
         void onUpdatedTable();
     }
-    
+
     private void tbl_account() {
         studentService = new StudentService();
 
         ModelSP = new DefaultTableModel() {
-            @Override //Không cho người dùng edit table
+            @Override // Không cho người dùng edit table
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
+        ButtonRenderer deleteButton = new ButtonRenderer("Xóa");
         tbl_Student.setModel(ModelSP);
         ModelSP.addColumn("STT");
         ModelSP.addColumn("ID");
@@ -53,10 +61,17 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
         ModelSP.addColumn("Số điện thoại");
         ModelSP.addColumn("Địa chỉ");
         ModelSP.addColumn("Trạng thái");
-
+        ModelSP.addColumn("Thao tác");
         tbl_Student.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        tbl_Student.getColumnModel().getColumn(6).setCellRenderer(deleteButton);
 
         setDataSPtable(studentService.getListSTU());
+
+    }
+
+    private void deleteStudent(String studentID) {
+        studentService.deleteAcc(studentID);
+        tbl_account();
     }
 
     private void setDataSPtable(List<StudentInClass> SPlist) {
@@ -67,16 +82,17 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
                 sp.getUsername(),
                 sp.getPhone(),
                 sp.getEmail(),
-                sp.getStatus()
+                sp.getStatus(),
+                "Xóa"
             });
         }
     }
-    
 
     public void showialogStudent() {
         DialogHocSinh d = new DialogHocSinh();
         d.setVisible(true);
     }
+
     public void closeDialog() {
         SwingUtilities.getWindowAncestor(this).dispose();
     }
@@ -85,7 +101,6 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnAddNew = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Student = new javax.swing.JTable();
@@ -100,8 +115,6 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Xóa");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -109,17 +122,13 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddNew)
-                    .addComponent(jButton1))
+                .addComponent(btnAddNew)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -152,6 +161,7 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_Student.setColumnSelectionAllowed(true);
         tbl_Student.getTableHeader().setReorderingAllowed(false);
         tbl_Student.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -159,6 +169,7 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tbl_Student);
+        tbl_Student.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_Student.getColumnModel().getColumnCount() > 0) {
             tbl_Student.getColumnModel().getColumn(0).setResizable(false);
             tbl_Student.getColumnModel().getColumn(1).setResizable(false);
@@ -166,6 +177,7 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
             tbl_Student.getColumnModel().getColumn(3).setResizable(false);
             tbl_Student.getColumnModel().getColumn(4).setResizable(false);
             tbl_Student.getColumnModel().getColumn(5).setResizable(false);
+            tbl_Student.getColumnModel().getColumn(6).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -207,43 +219,56 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnAddNewMouseEntered
 
-    private void tbl_StudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_StudentMouseClicked
+    private void tbl_StudentMouseClicked(java.awt.event.MouseEvent evt) {
         DefaultTableModel tblModel = (DefaultTableModel) tbl_Student.getModel();
 
         if (tbl_Student.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Please select a row.");
         } else {
+            int selectedColumn = tbl_Student.getSelectedColumn();
             int selectedRow = tbl_Student.getSelectedRow();
 
-            if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
-                String id = tblModel.getValueAt(selectedRow, 1).toString();
-                System.out.println(id);
-                try {
-                    String url = "SELECT * FROM qlhs.tbl_account WHERE (id = ?)";
-                    pst = connection.prepareStatement(url);
-                    pst.setString(1, id);
-                    rs = pst.executeQuery();
+            String id = tblModel.getValueAt(selectedRow, 1).toString();
+            // Check if the click event occurred on the "Xóa" button (assuming it's the last column)
+            if (selectedColumn == tblModel.getColumnCount() - 1) {
+                int confirmDialogResult = JOptionPane.showConfirmDialog(
+                        null,
+                        "Xác nhận xóa học sinh?",
+                        "Xóa",
+                        JOptionPane.YES_NO_OPTION);
 
-                    if (rs.next()) {
-                        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin học sinh");
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        frame.getContentPane().add(new DialogHocSinh(rs, frame));
-                        frame.pack();
-                        frame.setLocationRelativeTo(null);
-                        frame.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin tài khoản!");
-                    }
-                } catch (Exception e) {
-                    System.out.println(e);
-                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+                if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                    deleteStudent(id);
                 }
+
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid row or column index.");
+                if (selectedRow < tblModel.getRowCount() && selectedColumn < tblModel.getColumnCount()) {
+                    try {
+                        String url = "SELECT * FROM qlhs.tbl_account WHERE (id = ?)";
+                        pst = connection.prepareStatement(url);
+                        pst.setString(1, id);
+                        rs = pst.executeQuery();
+
+                        if (rs.next()) {
+                            JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin học sinh");
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            frame.getContentPane().add(new DialogHocSinh(rs, frame));
+                            frame.pack();
+                            frame.setLocationRelativeTo(null);
+                            frame.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin tài khoản!");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid row or column index.");
+                }
             }
         }
-
-    }//GEN-LAST:event_tbl_StudentMouseClicked
+    }
 
     private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {
         JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin học sinh");
@@ -258,7 +283,6 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNew;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

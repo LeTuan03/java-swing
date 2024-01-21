@@ -4,6 +4,7 @@
  */
 package view;
 
+import common.ButtonRenderer;
 import common.ConnectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,11 +51,14 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         classesService = new ClassesService();
         ModelClasses = new DefaultTableModel();
 
+        ButtonRenderer deleteButton = new ButtonRenderer("Xóa");
         tbl_Classes.setModel(ModelClasses);
         ModelClasses.addColumn("STT");
         ModelClasses.addColumn("ID");
         ModelClasses.addColumn("Tên lớp học");
         ModelClasses.addColumn("Giáo viên dạy");
+
+        tbl_Classes.getColumnModel().getColumn(3).setCellRenderer(deleteButton);
         if (idAcc > 0) {
             setDataTableClasses(classesService.getListClassesByTeacher(idAcc));
         } else {
@@ -68,11 +72,16 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
                 ModelClasses.getRowCount() + 1,
                 cl.getId(),
                 cl.getName(),
-                cl.getCreatedBy()
+                cl.getCreatedBy(),
+                "Xóa"
             });
         }
     }
 
+    private void deleteClasses(String teacherID) {
+        classesService.deleteClasses(teacherID);
+        tbl_classes();
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -211,9 +220,22 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Please select a row.");
         } else {
             int selectedRow = tbl_Classes.getSelectedRow();
+            int selectedColumn = tbl_Classes.getSelectedColumn();
 
-            if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
-                String id = tblModel.getValueAt(selectedRow, 1).toString();
+            String id = tblModel.getValueAt(selectedRow, 1).toString();
+            
+            if (selectedColumn == tblModel.getColumnCount() - 1) {
+                int confirmDialogResult = JOptionPane.showConfirmDialog(
+                        null,
+                        "Xác nhận xóa lớp học?",
+                        "Xóa",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                    deleteClasses(id);
+                }
+
+            } else if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
                 try {
                     String url = "SELECT * FROM qlhs.tbl_classes WHERE (id = ?)";
                     pst = connection.prepareStatement(url);

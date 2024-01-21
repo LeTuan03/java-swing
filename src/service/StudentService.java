@@ -30,4 +30,8 @@ public class StudentService {
     public Account getInforSTU(int idAcc) {
         return studentDAO.getInforSTU(idAcc);
     }
+    
+    public List<StudentInClass> deleteAcc(String idAcc) {
+        return studentDAO.deleteAcc(idAcc);
+    }
 }

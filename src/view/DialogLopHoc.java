@@ -120,7 +120,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 stu.getUser_id(),
                 stu.getUsername(),
                 stu.getCode(),
-                "DELETE"
+                "Xóa"
             });
         }
     }
