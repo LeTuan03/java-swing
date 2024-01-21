@@ -42,6 +42,34 @@ public class ClassesDAO {
 //        trả về danh sách sản phẩm
         return SPlist;
     }
+    
+    public List<Classes> getListClassesByTeacher(int id) {
+        List<Classes> SPlist = new ArrayList<Classes>();
+
+        Connection connection = ConnectDatabase.getMyConnection();
+        String sql = "SELECT id, name, created_by FROM tbl_classes where account_id = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Classes classes = new Classes();
+                classes.setId(rs.getInt("id"));
+                classes.setName(rs.getString("name"));
+                classes.setCreatedBy(rs.getString("created_by"));
+                SPlist.add(classes);
+            }
+
+//            ngắt kết nối database
+            ps.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        trả về danh sách sản phẩm
+        return SPlist;
+    }
 
     public void updateClasses(Classes classes) {
         Connection connection = ConnectDatabase.getMyConnection();

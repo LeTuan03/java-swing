@@ -19,6 +19,7 @@ import service.ClassesService;
 
 public class SideBarManageClasses extends javax.swing.JInternalFrame {
 
+    public int idAcc;
     private DefaultTableModel ModelClasses;
     ClassesService classesService;
     Connection connection = null;
@@ -27,6 +28,17 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
 
     public SideBarManageClasses() {
         initComponents();
+        tbl_classes();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
+        connection = ConnectDatabase.getMyConnection();
+    }
+
+    public SideBarManageClasses(int id) {
+        initComponents();
+        idAcc = id;
+        System.out.println(id);
         tbl_classes();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -43,8 +55,11 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         ModelClasses.addColumn("ID");
         ModelClasses.addColumn("Tên lớp học");
         ModelClasses.addColumn("Giáo viên dạy");
-
-        setDataTableClasses(classesService.getListClasses());
+        if (idAcc > 0) {
+            setDataTableClasses(classesService.getListClassesByTeacher(idAcc));
+        } else {
+            setDataTableClasses(classesService.getListClasses());
+        }
     }
 
     private void setDataTableClasses(List<Classes> SPlist) {
@@ -149,8 +164,7 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +223,11 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
                     if (rs.next()) {
                         JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        frame.getContentPane().add(new DialogLopHoc(rs, frame));
+                        if (idAcc > 0) {
+                            frame.getContentPane().add(new DialogLopHoc(rs, frame, idAcc));
+                        } else {
+                            frame.getContentPane().add(new DialogLopHoc(rs, frame));
+                        }
                         frame.pack();
                         frame.setLocationRelativeTo(null);
                         frame.setVisible(true);
@@ -229,7 +247,7 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
     private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
         JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new DialogLopHoc());
+        frame.getContentPane().add(new DialogLopHoc(idAcc));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

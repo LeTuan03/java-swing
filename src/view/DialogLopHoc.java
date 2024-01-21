@@ -46,6 +46,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         this.parentFrame = parentFrame;
         connection = ConnectDatabase.getMyConnection();
         try {
+            System.out.println();
             className.setText(rs.getString("name"));
             startDate.setText(rs.getString("start_date"));
             endDate.setText(rs.getString("end_date"));
@@ -54,6 +55,39 @@ public class DialogLopHoc extends javax.swing.JPanel {
             id = rs.getString("id");
         } catch (Exception e) {
             System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+        }
+        TableStu();
+    }
+    public DialogLopHoc(ResultSet rs, JFrame parentFrame, int idAcc) {
+
+        initComponents();
+        this.parentFrame = parentFrame;
+        connection = ConnectDatabase.getMyConnection();
+        try {
+            System.out.println();
+            className.setText(rs.getString("name"));
+            startDate.setText(rs.getString("start_date"));
+            endDate.setText(rs.getString("end_date"));
+            homeTeacher.setText(rs.getString("account_id"));
+            homeTeacher.enable(false);
+            note.setText(rs.getString("note"));
+            id = rs.getString("id");
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+        }
+        TableStu();
+    }
+    public DialogLopHoc(int idAcc) {
+
+        initComponents();
+        this.parentFrame = parentFrame;
+        connection = ConnectDatabase.getMyConnection();
+        try {
+            homeTeacher.setText(Integer.toString(idAcc));
+            homeTeacher.enable(false);
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
         }
         TableStu();

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +28,9 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane(null);
         connection = ConnectDatabase.getMyConnection();
+    }
+    public SideBarManageTeacher(int idAcc) {
+        initComponents();
     }
 
     private void tbl_account() {
@@ -75,6 +80,11 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
         );
 
         btnAddNew.setText("Thêm mới");
+        btnAddNew.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -135,6 +145,11 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_Teacher.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_TeacherMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Teacher);
         if (tbl_Teacher.getColumnModel().getColumnCount() > 0) {
             tbl_Teacher.getColumnModel().getColumn(0).setResizable(false);
@@ -183,6 +198,53 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbl_TeacherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_TeacherMouseClicked
+        DefaultTableModel tblModel = (DefaultTableModel) tbl_Teacher.getModel();
+
+        if (tbl_Teacher.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row.");
+        } else {
+            int selectedRow = tbl_Teacher.getSelectedRow();
+
+            if (selectedRow < tblModel.getRowCount() && 1 < tblModel.getColumnCount()) {
+                String id = tblModel.getValueAt(selectedRow, 1).toString();
+                System.out.println(id);
+                try {
+                    String url = "SELECT * FROM qlhs.tbl_account WHERE (id = ?)";
+                    pst = connection.prepareStatement(url);
+                    pst.setString(1, id);
+                    rs = pst.executeQuery();
+
+                    if (rs.next()) {
+                        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin giáo viên");
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.getContentPane().add(new DialogGiaoVien(rs, frame));
+                        frame.pack();
+                        frame.setLocationRelativeTo(null);
+                        frame.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin tài khoản!");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid row or column index.");
+            }
+        }
+    }//GEN-LAST:event_tbl_TeacherMouseClicked
+
+    private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
+        JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin giáo viên");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        DialogGiaoVien dialogGiaoVien = new DialogGiaoVien();
+        frame.getContentPane().add(dialogGiaoVien);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_btnAddNewMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

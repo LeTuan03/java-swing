@@ -150,7 +150,19 @@ public int idAcc;
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            Dashboad d = new Dashboad();
+                            Dashboad d = new Dashboad(idAcc);
+                            d.setVisible(true);
+                            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginApp.this);
+                            frame.dispose();
+                        }
+                    });
+                }
+                if(role == 1){
+                    JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            DashboadTeacher d = new DashboadTeacher(idAcc);
                             d.setVisible(true);
                             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginApp.this);
                             frame.dispose();

@@ -229,7 +229,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 }
 
 
-                sqlBuilder.append("role = 1 WHERE (id = ?);");
+                sqlBuilder.append("role = 3 WHERE (id = ?);");
             }
 
             pst = connection.prepareStatement(sqlBuilder.toString());

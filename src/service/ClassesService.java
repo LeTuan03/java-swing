@@ -16,6 +16,10 @@ public class ClassesService {
     public List<Classes> getListClasses(){
         return classesDAO.getListClasses();
     }
+    
+    public List<Classes> getListClassesByTeacher(int id){
+        return classesDAO.getListClassesByTeacher(id);
+    }
     public void UpdateClassesService(Classes classes){
        classesDAO.updateClasses(classes);
     }

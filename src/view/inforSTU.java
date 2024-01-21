@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package view;
 
 import common.ConnectDatabase;
@@ -9,16 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import model.Account;
-import model.Member;
-import service.StudentService;
 
-/**
- *
- * @author My Computer
- */
 public class inforSTU extends javax.swing.JInternalFrame {
     public int idAcc;
 
@@ -80,14 +69,15 @@ public class inforSTU extends javax.swing.JInternalFrame {
         idText = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
-        usernameText.setText("jTextField1");
+        usernameText.setEditable(false);
 
         jLabel1.setText("Tên tài khoản");
 
-        phoneText.setText("jTextField1");
+        phoneText.setEditable(false);
 
         jLabel2.setText("Số điện thoại");
 
+        emailText.setEditable(false);
         emailText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailTextActionPerformed(evt);
@@ -96,15 +86,15 @@ public class inforSTU extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Email");
 
-        birthText.setText("jTextField1");
+        birthText.setEditable(false);
 
         jLabel4.setText("Ngày sinh");
 
-        addressText.setText("jTextField2");
+        addressText.setEditable(false);
 
         jLabel5.setText("Địa chỉ");
 
-        idText.setText("jTextField1");
+        idText.setEditable(false);
 
         jLabel6.setText("Mã sinh viên");
 

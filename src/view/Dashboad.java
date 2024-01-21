@@ -4,7 +4,7 @@ import java.awt.Color;
 import model.Account;
 
 public class Dashboad extends javax.swing.JFrame {
-
+    public int idAcc;
     private Account currentAccount;
     Color DefaultColor, ClickedColor;
     public Dashboad() {
@@ -17,13 +17,16 @@ public class Dashboad extends javax.swing.JFrame {
         home3.setBackground(DefaultColor);
         home4.setBackground(DefaultColor);
     }
-    public Dashboad(Account currentAccount) {
-        this.currentAccount = currentAccount;
+    public Dashboad(int data) {
         initComponents();
-        getCurrenrUser();
-    }
-    private void getCurrenrUser() {
-         System.out.println(currentAccount.getUsername());
+        idAcc = data;
+        DefaultColor = new Color(255,255,255);
+        ClickedColor = new Color(255,152,51);
+        home.setBackground(DefaultColor);
+        home1.setBackground(DefaultColor);
+        home2.setBackground(DefaultColor);
+        home3.setBackground(DefaultColor);
+        home4.setBackground(DefaultColor);
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -399,7 +402,7 @@ public class Dashboad extends javax.swing.JFrame {
     }//GEN-LAST:event_home3MouseClicked
 
     private void home4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_home4MouseClicked
-        SideBarAccountInfo accountInfo = new SideBarAccountInfo();
+        SideBarAccountInfo accountInfo = new SideBarAccountInfo(idAcc);
         jDesktopPanel.removeAll();
         jDesktopPanel.add(accountInfo).setVisible(true);
     }//GEN-LAST:event_home4MouseClicked

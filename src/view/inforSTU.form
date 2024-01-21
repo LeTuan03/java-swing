@@ -86,7 +86,7 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="usernameText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -96,7 +96,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="phoneText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -105,6 +105,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="emailText">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailTextActionPerformed"/>
       </Events>
@@ -116,7 +119,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="birthText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -126,7 +129,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="addressText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -136,7 +139,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="idText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
+        <Property name="editable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
