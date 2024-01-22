@@ -384,7 +384,7 @@ public class DashboadTeacher extends javax.swing.JFrame {
     }//GEN-LAST:event_home4MousePressed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        Home home = new Home();
+        SideBarHomePage home = new SideBarHomePage();
         jDesktopPanel.removeAll();
         jDesktopPanel.add(home).setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked

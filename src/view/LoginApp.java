@@ -9,10 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class LoginApp extends javax.swing.JPanel {
-public int idAcc;
+
+    public int idAcc;
     Connection connection = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+
     public LoginApp() {
         initComponents();
         connection = ConnectDatabase.getMyConnection();
@@ -170,7 +172,7 @@ public int idAcc;
         });
     }
     private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        
+
     }//GEN-LAST:event_btnLoginMouseEntered
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
@@ -180,17 +182,17 @@ public int idAcc;
             pst.setString(1, username.getText());
             pst.setString(2, password.getText());
             rs = pst.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int role = rs.getInt("role");
                 idAcc = rs.getInt("id");
-                if(role == 3){
+                if (role == 3) {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                     DashboadStudent dStu = new DashboadStudent(idAcc);
                     dStu.setVisible(true);
                     JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginApp.this);
                     frame.dispose();
                 }
-                if(role == 2){
+                if (role == 2) {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
@@ -202,7 +204,7 @@ public int idAcc;
                         }
                     });
                 }
-                if(role == 1){
+                if (role == 1) {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
