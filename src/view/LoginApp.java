@@ -184,6 +184,7 @@ public int idAcc;
                 int role = rs.getInt("role");
                 idAcc = rs.getInt("id");
                 if(role == 3){
+                    JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
                     DashboadStudent dStu = new DashboadStudent(idAcc);
                     dStu.setVisible(true);
                     JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(LoginApp.this);

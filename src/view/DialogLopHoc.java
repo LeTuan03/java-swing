@@ -58,6 +58,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         }
         TableStu();
     }
+
     public DialogLopHoc(ResultSet rs, JFrame parentFrame, int idAcc) {
 
         initComponents();
@@ -77,6 +78,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         }
         TableStu();
     }
+
     public DialogLopHoc(int idAcc) {
 
         initComponents();
@@ -166,7 +168,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 ModelSP.removeRow(row);
                 // Xóa dữ liệu từ cơ sở dữ liệu
                 deleteDataFromDatabase(row);
-                
+
                 TableStu();
             }
             fireEditingStopped();
@@ -396,7 +398,7 @@ public class DialogLopHoc extends javax.swing.JPanel {
         classes.setName(className.getText());
         classes.setNote(note.getText());
         classes.setAccountId(homeTeacher.getText());
-        
+
         try {
 
             if (id == null || id.isEmpty()) {
@@ -418,13 +420,18 @@ public class DialogLopHoc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSubmitMouseClicked
 
     private void addStuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addStuMouseClicked
-        JFrame frame = new JFrame("Thêm học sinh vào lớp học");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        AddStuInClass addStuInClass = new AddStuInClass(id);
-        frame.getContentPane().add(addStuInClass);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        if (id == null || id.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng tạo mới lớp học trước khi thêm học sinh!");
+            addStu.setEnabled(false);
+        } else {
+            JFrame frame = new JFrame("Thêm học sinh vào lớp học");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            AddStuInClass addStuInClass = new AddStuInClass(id);
+            frame.getContentPane().add(addStuInClass);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
     }//GEN-LAST:event_addStuMouseClicked
 
 
