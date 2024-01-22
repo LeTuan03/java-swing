@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package view;
 
 import common.ButtonRenderer;
@@ -15,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Classes;
-import model.StudentInClass;
 import service.ClassesService;
 
 public class SideBarManageClasses extends javax.swing.JInternalFrame {
@@ -215,7 +210,11 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
     private void btnAddNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseClicked
         JFrame frame = new JFrame("Thêm mới/Cập nhật thông tin lớp học");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new DialogLopHoc());
+        if (idAcc > 0) {
+            frame.getContentPane().add(new DialogLopHoc(idAcc));
+        } else {
+            frame.getContentPane().add(new DialogLopHoc());
+        }
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -237,10 +236,10 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
 
             if (selectedColumn == tblModel.getColumnCount() - 1) {
                 int confirmDialogResult = JOptionPane.showConfirmDialog(
-                    null,
-                    "Xác nhận xóa lớp học?",
-                    "Xóa",
-                    JOptionPane.YES_NO_OPTION);
+                        null,
+                        "Xác nhận xóa lớp học?",
+                        "Xóa",
+                        JOptionPane.YES_NO_OPTION);
 
                 if (confirmDialogResult == JOptionPane.YES_OPTION) {
                     deleteClasses(id);
