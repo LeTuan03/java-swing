@@ -72,67 +72,72 @@ public class ClassesDAO {
     }
 
     public void updateClasses(Classes classes) {
-        Connection connection = ConnectDatabase.getMyConnection();
-        String sql = "UPDATE `qlhs`.`tbl_classes` SET `name` = ?, `note` = ? WHERE (`id` = ? )";
+    Connection connection = ConnectDatabase.getMyConnection();
+    String sql = "UPDATE `qlhs`.`tbl_classes` SET `name` = ?, `note` = ?, `startDate` = ?, `endDate` = ? WHERE (`id` = ?)";
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, classes.getName());
-            ps.setString(2, classes.getNote());
-            ps.setInt(3, classes.getId());
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, classes.getName());
+        ps.setString(2, classes.getNote());
+        ps.setString(3, classes.getStartDate());  // Nếu startDate là kiểu DATE, sử dụng ps.setDate(3, Date.valueOf(classes.getStartDate()));
+        ps.setString(4, classes.getEndDate());    // Nếu endDate là kiểu DATE, sử dụng ps.setDate(4, Date.valueOf(classes.getEndDate()));
+        ps.setInt(5, classes.getId());             // Nếu id là kiểu STRING, sử dụng ps.setString(5, classes.getId());
 
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Cập nhật thành công!");
-            } else {
-                System.out.println("Không có dòng nào được cập nhật!");
-            }
-
-            ps.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Cập nhật thành công!");
+        } else {
+            System.out.println("Không có dòng nào được cập nhật!");
         }
+
+        ps.close();
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
-    public void addNewClasses(Classes classes) {
-        Connection connection = ConnectDatabase.getMyConnection();
-        String sqlGetDetailGiaoVien = "SELECT * FROM `qlhs`.`tbl_account` WHERE id = ? ";
-        String sqlAddNewClass = "INSERT INTO `qlhs`.`tbl_classes` (`account_id`, `name`, `note`, `created_by`) VALUES (?, ?, ?, ?);";
+public void addNewClasses(Classes classes) {
+    Connection connection = ConnectDatabase.getMyConnection();
+    String sqlGetDetailGiaoVien = "SELECT * FROM `qlhs`.`tbl_account` WHERE id = ? ";
+    String sqlAddNewClass = "INSERT INTO `qlhs`.`tbl_classes` (`account_id`, `name`, `note`, `created_by`, `startDate`, `endDate`) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try {
-            // Lấy thông tin của tài khoản
-            PreparedStatement psGetDetailGiaoVien = connection.prepareStatement(sqlGetDetailGiaoVien);
-            psGetDetailGiaoVien.setString(1, classes.getAccountId());
-            ResultSet rs = psGetDetailGiaoVien.executeQuery();
+    try {
+        // Lấy thông tin của tài khoản
+        PreparedStatement psGetDetailGiaoVien = connection.prepareStatement(sqlGetDetailGiaoVien);
+        psGetDetailGiaoVien.setString(1, classes.getAccountId());
+        ResultSet rs = psGetDetailGiaoVien.executeQuery();
 
-            String createdBy = "";  // Mặc định để tránh lỗi biên dịch
-            if (rs.next()) {
-                createdBy = rs.getString("username");  // Thay "name" bằng tên cột chứa thông tin cần lấy
-            }
-
-            // Thêm mới lớp học với thông tin đã lấy
-            PreparedStatement psAddNewClass = connection.prepareStatement(sqlAddNewClass);
-            psAddNewClass.setString(1, classes.getAccountId());
-            psAddNewClass.setString(2, classes.getName());
-            psAddNewClass.setString(3, classes.getNote());
-            psAddNewClass.setString(4, createdBy);
-
-            int rowsAffected = psAddNewClass.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Thêm mới thành công!");
-            } else {
-                System.out.println("Không có dòng nào được thêm mới!");
-            }
-
-            rs.close();
-            psGetDetailGiaoVien.close();
-            psAddNewClass.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String createdBy = "";  // Mặc định để tránh lỗi biên dịch
+        if (rs.next()) {
+            createdBy = rs.getString("username");  // Thay "name" bằng tên cột chứa thông tin cần lấy
         }
+
+        // Thêm mới lớp học với thông tin đã lấy
+        PreparedStatement psAddNewClass = connection.prepareStatement(sqlAddNewClass);
+        psAddNewClass.setString(1, classes.getAccountId());
+        psAddNewClass.setString(2, classes.getName());
+        psAddNewClass.setString(3, classes.getNote());
+        psAddNewClass.setString(4, createdBy);
+        psAddNewClass.setString(5, classes.getStartDate());  // Nếu startDate là kiểu DATE, sử dụng ps.setDate(5, Date.valueOf(classes.getStartDate()));
+        psAddNewClass.setString(6, classes.getEndDate());    // Nếu endDate là kiểu DATE, sử dụng ps.setDate(6, Date.valueOf(classes.getEndDate()));
+
+        int rowsAffected = psAddNewClass.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Thêm mới thành công!");
+        } else {
+            System.out.println("Không có dòng nào được thêm mới!");
+        }
+
+        rs.close();
+        psGetDetailGiaoVien.close();
+        psAddNewClass.close();
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
+
 
     public List<Member> getListClassesInRoleSTU(int idAcc) {
         List<Member> SPlist = new ArrayList<Member>();

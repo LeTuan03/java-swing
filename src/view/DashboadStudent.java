@@ -23,7 +23,7 @@ public class DashboadStudent extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         individualInfo = new javax.swing.JToggleButton();
         listClassStudent = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
+        homePage = new javax.swing.JToggleButton();
         container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -92,33 +92,38 @@ public class DashboadStudent extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton3.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
-        jToggleButton3.setText("   Thông tin học tập");
-        jToggleButton3.setBorder(null);
-        jToggleButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        homePage.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
+        homePage.setText("   Trang chủ");
+        homePage.setBorder(null);
+        homePage.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        homePage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homePageMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(individualInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(listClassStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addComponent(homePage, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(49, 49, 49)
+                .addComponent(homePage, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(individualInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(listClassStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
@@ -167,6 +172,12 @@ public class DashboadStudent extends javax.swing.JFrame {
         title.setText("Danh sách lớp học");
     }//GEN-LAST:event_listClassStudentActionPerformed
 
+    private void homePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homePageMouseClicked
+        container.removeAll();
+        container.add(new SideBarHomePage()).setVisible(true);
+        title.setText("Trang chủ");
+    }//GEN-LAST:event_homePageMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -202,11 +213,11 @@ public class DashboadStudent extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel container;
+    private javax.swing.JToggleButton homePage;
     private javax.swing.JToggleButton individualInfo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton listClassStudent;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables

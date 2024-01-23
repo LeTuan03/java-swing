@@ -46,9 +46,10 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
         ModelSP.addColumn("ID");
         ModelSP.addColumn("Tên giáo viên");
         ModelSP.addColumn("Số điện thoại");
+        ModelSP.addColumn("Thao tác");
 
         tbl_Teacher.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-        tbl_Teacher.getColumnModel().getColumn(3).setCellRenderer(deleteButton);
+        tbl_Teacher.getColumnModel().getColumn(4).setCellRenderer(deleteButton);
         setDataSPtable(studentService.getListTeacher());
     }
 
@@ -98,36 +99,36 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
 
         tbl_Teacher.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, null, null},
-                {"12", null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {"1", null, null, null, null},
+                {"12", null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "ID", "Tên giáo viên", "Số điện thoại"
+                "STT", "ID", "Tên giáo viên", "Số điện thoại", "Thao tác"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -149,6 +150,7 @@ public class SideBarManageTeacher extends javax.swing.JInternalFrame {
             tbl_Teacher.getColumnModel().getColumn(1).setResizable(false);
             tbl_Teacher.getColumnModel().getColumn(2).setResizable(false);
             tbl_Teacher.getColumnModel().getColumn(3).setResizable(false);
+            tbl_Teacher.getColumnModel().getColumn(4).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

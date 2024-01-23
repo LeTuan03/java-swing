@@ -5,8 +5,8 @@ import java.util.Date;
 public class Classes {
     private int id;
     private String name;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String status;
     private String createdBy;
     private String accountId;
@@ -28,19 +28,19 @@ public class Classes {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -76,5 +76,6 @@ public class Classes {
         this.note = note;
     }
 
+    
    
 }

@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarManageTeacher.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarAccountInfo.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DialogLopHoc.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/model/Member.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/Home.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarHomePage.java</file>
             <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarManageStudent.java</file>
-            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/SideBarManageClasses.java</file>
-            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/inforSTU.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/Dashboad.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DashboadStudent.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DialogHocSinh.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/view/DialogGiaoVien.java</file>
+            <file>file:/D:/HocDH/JAVA/SWING/ManageStudent/src/model/Account.java</file>
         </group>
     </open-files>
 </project-private>

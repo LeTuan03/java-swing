@@ -3,22 +3,24 @@ package model;
 import java.util.Date;
 
 public class Account {
-     private long id;
-     private String username;
-     private String password;
-     private String phone;
-     private String code;
-     private String role;
-     private String address;
-     private Date birth;
-     private String status;
-     private String email;
+
+    private long id;
+    private String username;
+    private String password;
+    private String phone;
+    private String code;
+    private String role;
+    private String address;
+    private Date birth;
+    private String status;
+    private String email;
+    private String birthDay;
 
     public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -94,5 +96,12 @@ public class Account {
         this.email = email;
     }
 
-   
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
 }

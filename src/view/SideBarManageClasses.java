@@ -52,8 +52,9 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
         ModelClasses.addColumn("ID");
         ModelClasses.addColumn("Tên lớp học");
         ModelClasses.addColumn("Giáo viên dạy");
+        ModelClasses.addColumn("Thao tác");
 
-        tbl_Classes.getColumnModel().getColumn(3).setCellRenderer(deleteButton);
+        tbl_Classes.getColumnModel().getColumn(4).setCellRenderer(deleteButton);
         if (idAcc > 0) {
             setDataTableClasses(classesService.getListClassesByTeacher(idAcc));
         } else {
@@ -88,23 +89,23 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
 
         tbl_Classes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"c", "d", "e", "f"},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {"c", null, "d", "e", "f"},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên lớp học", "Giáo viên dạy", "Sĩ số lớp"
+                "STT", "", "Tên lớp học", "Giáo viên dạy", "Thao tác"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -129,6 +130,7 @@ public class SideBarManageClasses extends javax.swing.JInternalFrame {
             tbl_Classes.getColumnModel().getColumn(1).setResizable(false);
             tbl_Classes.getColumnModel().getColumn(2).setResizable(false);
             tbl_Classes.getColumnModel().getColumn(3).setResizable(false);
+            tbl_Classes.getColumnModel().getColumn(4).setResizable(false);
         }
 
         btnAddNew.setText("Thêm mới");

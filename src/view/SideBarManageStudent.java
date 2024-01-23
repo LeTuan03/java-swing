@@ -217,7 +217,6 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
 
     private void btnAddNewMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewMouseEntered
 
-
     }//GEN-LAST:event_btnAddNewMouseEntered
 
     private void tbl_StudentMouseClicked(java.awt.event.MouseEvent evt) {

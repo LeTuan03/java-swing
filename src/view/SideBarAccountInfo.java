@@ -34,7 +34,7 @@ public class SideBarAccountInfo extends javax.swing.JInternalFrame {
                 phoneText.setText(rs.getString("phone"));
                 emailText.setText(rs.getString("email"));
                 addressText.setText(rs.getString("address"));
-                birthText.setText(rs.getString("birth"));
+                birthText.setText(rs.getString("birthDay"));
             }
             
             ps.close();

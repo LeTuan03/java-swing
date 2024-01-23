@@ -41,7 +41,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
             phone.setText(rs.getString("phone"));
             email.setText(rs.getString("email"));
             status.setText(rs.getString("status"));
-//            birth.setText(rs.getString("birth"));
+            birth.setText(rs.getString("birthDay"));
             id = rs.getString("id");
 
         } catch (Exception e) {
@@ -206,8 +206,8 @@ public class DialogHocSinh extends javax.swing.JPanel {
             if (id == null || id.isEmpty()) {
                 // Thêm mới
                 sqlBuilder.append("INSERT INTO tbl_account (");
-                sqlBuilder.append("username, password, phone, email, status, role");
-                sqlBuilder.append(") VALUES (?, ?, ?, ?, ?, 3);");
+                sqlBuilder.append("username, password, phone, email, status, role, birthDay");
+                sqlBuilder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, 3);");
             } else {
                 // Cập nhật
                 sqlBuilder.append("UPDATE qlhs.tbl_account SET ");
@@ -227,6 +227,9 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 if (status.getText() != null && !status.getText().isEmpty()) {
                     sqlBuilder.append("status = ?, ");
                 }
+                if (birth.getText() != null && !birth.getText().isEmpty()) {
+                    sqlBuilder.append("birthDay = ?, ");
+                }
 
 
                 sqlBuilder.append("role = 3 WHERE (id = ?);");
@@ -240,10 +243,10 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 // Thêm mới
                 pst.setString(parameterIndex++, username.getText());
                 pst.setString(parameterIndex++, password.getText());
-//            pst.setString(parameterIndex++, birth.getText());
                 pst.setString(parameterIndex++, phone.getText());
                 pst.setString(parameterIndex++, email.getText());
                 pst.setString(parameterIndex++, status.getText());
+                pst.setString(parameterIndex++, birth.getText());
             } else {
                 // Cập nhật
                 if (password.getText() != null && !password.getText().isEmpty()) {
@@ -260,6 +263,9 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 }
                 if (status.getText() != null && !status.getText().isEmpty()) {
                     pst.setString(parameterIndex++, status.getText());
+                }
+                if (birth.getText() != null && !birth.getText().isEmpty()) {
+                    pst.setString(parameterIndex++, birth.getText());
                 }
                 pst.setString(parameterIndex++, id);
             }

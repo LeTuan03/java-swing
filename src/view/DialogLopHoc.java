@@ -47,8 +47,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
         connection = ConnectDatabase.getMyConnection();
         try {
             className.setText(rs.getString("name"));
-            startDate.setText(rs.getString("start_date"));
-            endDate.setText(rs.getString("end_date"));
+            startDate.setText(rs.getString("startDate"));
+            endDate.setText(rs.getString("endDate"));
             homeTeacher.setText(rs.getString("account_id"));
             note.setText(rs.getString("note"));
             id = rs.getString("id");
@@ -66,8 +66,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
         connection = ConnectDatabase.getMyConnection();
         try {
             className.setText(rs.getString("name"));
-            startDate.setText(rs.getString("start_date"));
-            endDate.setText(rs.getString("end_date"));
+            startDate.setText(rs.getString("startDate"));
+            endDate.setText(rs.getString("endDate"));
             homeTeacher.setText(rs.getString("account_id"));
             homeTeacher.enable(false);
             note.setText(rs.getString("note"));
@@ -100,9 +100,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         TableStu.setModel(ModelSP);
         ModelSP.addColumn("STT");
-        ModelSP.addColumn("ID");
+        ModelSP.addColumn("Mã học sinh");
         ModelSP.addColumn("Tên học sinh");
-        ModelSP.addColumn("Mã Lớp học");
         ModelSP.addColumn("Thao tác");
 
         TableStu.getColumn("Thao tác").setCellRenderer(new ButtonRenderer());
@@ -119,7 +118,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 ModelSP.getRowCount() + 1,
                 stu.getUser_id(),
                 stu.getUsername(),
-                stu.getCode(),
                 "Xóa"
             });
         }
@@ -178,11 +176,11 @@ public class DialogLopHoc extends javax.swing.JPanel {
             String studentId = TableStu.getValueAt(row, 1).toString();
             String code = TableStu.getValueAt(row, 3).toString();
             Connection connection = ConnectDatabase.getMyConnection();
-            String sql = "DELETE FROM `tbl_member` WHERE user_id = ? AND code = ?";
+            String sql = "DELETE FROM `tbl_member` WHERE user_id = ? AND project_id = ?";
             try {
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ps.setString(1, studentId);
-                ps.setString(2, code);
+                ps.setString(2, id);
                 ps.executeUpdate();
 
                 ps.close();
@@ -264,17 +262,17 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         TableStu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "STT", "Thao tác", "Tên học sinh", "Mã học sinh", "Thao tác"
+                "STT", "Mã học sinh", "Tên học sinh", "Thao tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -287,7 +285,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
             TableStu.getColumnModel().getColumn(1).setResizable(false);
             TableStu.getColumnModel().getColumn(2).setResizable(false);
             TableStu.getColumnModel().getColumn(3).setResizable(false);
-            TableStu.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -398,6 +395,8 @@ public class DialogLopHoc extends javax.swing.JPanel {
         classes.setName(className.getText());
         classes.setNote(note.getText());
         classes.setAccountId(homeTeacher.getText());
+        classes.setStartDate(startDate.getText());
+        classes.setEndDate(endDate.getText());
 
         try {
 
@@ -411,7 +410,10 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 classesService.UpdateClassesService(classes);
                 JOptionPane.showMessageDialog(null, "Cập nhật thông tin lớp học thành công!");
             }
-
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.dispose();
+            }
         } catch (Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
