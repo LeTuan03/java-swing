@@ -82,7 +82,7 @@ public class SideBarManageStudent extends javax.swing.JInternalFrame {
                 sp.getUsername(),
                 sp.getPhone(),
                 sp.getEmail(),
-                sp.getStatus(),
+                sp.getStatus() == 1 ? "Hoạt động" : "Không hoạt động",
                 "Xóa"
             });
         }

@@ -162,10 +162,10 @@ public class DialogLopHoc extends javax.swing.JPanel {
         public void actionPerformed(ActionEvent e) {
             if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa học sinh này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 int row = selectedRow;
-                // Xóa dòng tương ứng trong bảng
-                ModelSP.removeRow(row);
                 // Xóa dữ liệu từ cơ sở dữ liệu
                 deleteDataFromDatabase(row);
+                // Xóa dòng tương ứng trong bảng
+                ModelSP.removeRow(row);
 
                 TableStu();
             }
@@ -174,7 +174,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
 
         private void deleteDataFromDatabase(int row) {
             String studentId = TableStu.getValueAt(row, 1).toString();
-            String code = TableStu.getValueAt(row, 3).toString();
             Connection connection = ConnectDatabase.getMyConnection();
             String sql = "DELETE FROM `tbl_member` WHERE user_id = ? AND project_id = ?";
             try {
@@ -182,9 +181,9 @@ public class DialogLopHoc extends javax.swing.JPanel {
                 ps.setString(1, studentId);
                 ps.setString(2, id);
                 ps.executeUpdate();
-
                 ps.close();
                 connection.close();
+                JOptionPane.showMessageDialog(null, "Xóa học sinh trong lớp thành công!");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -210,7 +209,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
         addStu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableStu = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
         homeTeacher = new javax.swing.JTextField();
 
         className.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
@@ -287,8 +285,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
             TableStu.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -326,11 +322,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
                                     .addComponent(startDate, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))))
                         .addGap(61, 61, 61))))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,11 +361,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
                     .addComponent(btnSubmit)
                     .addComponent(btnCancel))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -445,7 +431,6 @@ public class DialogLopHoc extends javax.swing.JPanel {
     private javax.swing.JTextField className;
     private javax.swing.JTextField endDate;
     private javax.swing.JTextField homeTeacher;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

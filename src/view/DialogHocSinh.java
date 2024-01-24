@@ -40,10 +40,13 @@ public class DialogHocSinh extends javax.swing.JPanel {
             password.setText(rs.getString("password"));
             phone.setText(rs.getString("phone"));
             email.setText(rs.getString("email"));
-            status.setText(rs.getString("status"));
             birth.setText(rs.getString("birthDay"));
             id = rs.getString("id");
-
+            if (Integer.parseInt(rs.getString("status")) == 1) {
+                statusSelect.setSelectedItem("Hoạt động");
+            } else {
+                statusSelect.setSelectedItem("Không hoạt động");
+            }
         } catch (Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Có lỗi xảy ra " + e);
@@ -63,11 +66,11 @@ public class DialogHocSinh extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        status = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnSubmit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        statusSelect = new javax.swing.JComboBox<>();
 
         username.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
@@ -88,8 +91,6 @@ public class DialogHocSinh extends javax.swing.JPanel {
         email.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
         jLabel7.setText("Email");
-
-        status.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
         jLabel8.setText("Trạng thái");
 
@@ -113,6 +114,13 @@ public class DialogHocSinh extends javax.swing.JPanel {
             }
         });
 
+        statusSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "       ", "Hoạt động", "Không hoạt động" }));
+        statusSelect.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                statusSelectItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,11 +132,11 @@ public class DialogHocSinh extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6)
-                            .addComponent(phone, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-                            .addComponent(username))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                            .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(80, 80, 80)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
@@ -148,7 +156,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel5)
                                     .addComponent(birth, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(statusSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(66, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
@@ -171,7 +179,11 @@ public class DialogHocSinh extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statusSelect))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,11 +191,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 363, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSubmit)
@@ -206,8 +214,8 @@ public class DialogHocSinh extends javax.swing.JPanel {
             if (id == null || id.isEmpty()) {
                 // Thêm mới
                 sqlBuilder.append("INSERT INTO tbl_account (");
-                sqlBuilder.append("username, password, phone, email, status, role, birthDay");
-                sqlBuilder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, 3);");
+                sqlBuilder.append("username, password, phone, email, status, birthDay, role");
+                sqlBuilder.append(") VALUES (?, ?, ?, ?, ?, ?, 3);");
             } else {
                 // Cập nhật
                 sqlBuilder.append("UPDATE qlhs.tbl_account SET ");
@@ -224,13 +232,12 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 if (email.getText() != null && !email.getText().isEmpty()) {
                     sqlBuilder.append("email = ?, ");
                 }
-                if (status.getText() != null && !status.getText().isEmpty()) {
+                if (statusSelect.getSelectedItem() != null && !statusSelect.getSelectedItem().toString().isEmpty()) {
                     sqlBuilder.append("status = ?, ");
                 }
                 if (birth.getText() != null && !birth.getText().isEmpty()) {
                     sqlBuilder.append("birthDay = ?, ");
                 }
-
 
                 sqlBuilder.append("role = 3 WHERE (id = ?);");
             }
@@ -245,8 +252,14 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 pst.setString(parameterIndex++, password.getText());
                 pst.setString(parameterIndex++, phone.getText());
                 pst.setString(parameterIndex++, email.getText());
-                pst.setString(parameterIndex++, status.getText());
                 pst.setString(parameterIndex++, birth.getText());
+                if(statusSelect.getSelectedItem() != null && !statusSelect.getSelectedItem().toString().isEmpty()) {
+                    if(statusSelect.getSelectedItem() == "Hoạt động") {
+                        pst.setString(parameterIndex++, "1") ;
+                    } else {
+                        pst.setString(parameterIndex++, "0");
+                    }
+                }
             } else {
                 // Cập nhật
                 if (password.getText() != null && !password.getText().isEmpty()) {
@@ -261,8 +274,12 @@ public class DialogHocSinh extends javax.swing.JPanel {
                 if (email.getText() != null && !email.getText().isEmpty()) {
                     pst.setString(parameterIndex++, email.getText());
                 }
-                if (status.getText() != null && !status.getText().isEmpty()) {
-                    pst.setString(parameterIndex++, status.getText());
+                if(statusSelect.getSelectedItem() != null && !statusSelect.getSelectedItem().toString().isEmpty()) {
+                    if(statusSelect.getSelectedItem() == "Hoạt động") {
+                        pst.setString(parameterIndex++, "1") ;
+                    } else {
+                        pst.setString(parameterIndex++, "0");
+                    }
                 }
                 if (birth.getText() != null && !birth.getText().isEmpty()) {
                     pst.setString(parameterIndex++, birth.getText());
@@ -291,6 +308,13 @@ public class DialogHocSinh extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSubmitMouseClicked
 
+    private void statusSelectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_statusSelectItemStateChanged
+        Object selectedValue = statusSelect.getSelectedItem();
+        if (selectedValue != null) {
+            String selectedStatus = selectedValue.toString();
+        }
+    }//GEN-LAST:event_statusSelectItemStateChanged
+
     private void btnSubmitMouseEntered(java.awt.event.MouseEvent evt) {
 
     }
@@ -310,7 +334,7 @@ public class DialogHocSinh extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField password;
     private javax.swing.JTextField phone;
-    private javax.swing.JTextField status;
+    private javax.swing.JComboBox<String> statusSelect;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
